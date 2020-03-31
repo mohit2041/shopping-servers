@@ -2,6 +2,7 @@ const express=require("express")
 const path=require("path")
 const app=express()
 const hbs=require("hbs")
+const router=require("../routes/shop")
 
 const publicDirpath = path.join(__dirname,"../public")
 const viewpath=path.join(__dirname,"../templates/views")
@@ -12,24 +13,8 @@ app.set("view engine","hbs")
 app.set("views",viewpath)
 hbs.registerPartials(partialspath)
 
-app.get("",(req,res)=>{
-    res.render("index",{
-        title:"Homepage",
-        creator:"Mohit"
-    })
-})
-app.get("/contact",(req,res)=>{
-    res.render("contact",{
-        title:"contact",
-        creator:"Mohit"
-    })
-})
-app.get("/about",(req,res)=>{
-    res.render("about",{
-        title:"about",
-        creator:"Mohit"
-    })
-})
+app.use(router)
+
 app.listen(3000,()=>{
     console.log("server is up on the port 3000")
 })
