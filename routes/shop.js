@@ -2,10 +2,13 @@ const express=require("express")
 const router=express.Router()
 
 router.get("/",(req,res)=>{
-    res.render("layout",{
-        title:"Homepage",
-        creator:"Mohit"
-    })
+    const item={
+        imagePath:"/img/saw.jpg",
+        name:"saw",
+        description:"movie",
+        price:10+"$"
+    }
+    res.render("layout",item)
 })
 
 router.get("/index",(req,res)=>{

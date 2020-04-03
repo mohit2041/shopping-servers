@@ -10,7 +10,7 @@ router.post("/items",async (req,res)=>{
 
     try{
         await item.save()
-        res.status(201).send(item)
+        res.render("layout",item)
     }catch(e){
         res.status(500).send()
     }
