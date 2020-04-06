@@ -8,6 +8,6 @@
   font-size: 16px;
 }
 
-.item{
-  border: 2px solid gray;
+.colpad{
+  margin-top: 5px;
 }
