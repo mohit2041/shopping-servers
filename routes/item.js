@@ -11,7 +11,7 @@ router.post("/items",async (req,res)=>{
 
     try{
         await item.save()
-        res.render("layout")
+        res.render("items")
     }catch(e){
         res.status(500).send()
     }
@@ -22,7 +22,7 @@ router.get("/items",async (req,res)=>{
     try{
         const items= await Item.find()
         // console.log(items)
-        res.render("layout",{items})
+        res.render("items",{items})
     }catch(e){
         res.status(500).send()
     }
