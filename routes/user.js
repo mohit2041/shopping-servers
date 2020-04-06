@@ -6,7 +6,7 @@ router.get("/login",async(req,res)=>{
     try{
         res.render("signup")
     }catch(e){
-        res.send("error")
+        res.send()
     }
 })
 

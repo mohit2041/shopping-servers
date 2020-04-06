@@ -18,7 +18,7 @@ router.post("/items",async (req,res)=>{
 })
 
 //getting all items
-router.get("/",async (req,res)=>{
+router.get("/items",async (req,res)=>{
     try{
         const items= await Item.find()
         // console.log(items)
