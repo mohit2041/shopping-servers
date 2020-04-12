@@ -11,9 +11,8 @@ router.post("/items",async (req,res)=>{
 
     try{
         await item.save()
-        res.render("items")
     }catch(e){
-        res.status(500).send()
+        res.status(400).send()
     }
 })
 
@@ -24,7 +23,7 @@ router.get("/items",async (req,res)=>{
         // console.log(items)
         res.render("items",{items})
     }catch(e){
-        res.status(500).send()
+        res.status(400).send()
     }
 })
 
