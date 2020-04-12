@@ -1,6 +1,7 @@
 const express=require("express")
 const path=require("path")
 const app=express()
+const bodyParser = require("body-parser")
 require("./mongoose")
 const hbs=require("hbs")
 
@@ -18,8 +19,11 @@ app.set("views",viewpath)
 hbs.registerPartials(partialspath)
 
 app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
 app.use(itemrouter)
 app.use(userRouter)
+
 
 app.listen(3000,()=>{
     console.log("server is up on the port 3000")
