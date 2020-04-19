@@ -10,10 +10,9 @@ router.get("/login",async(req,res)=>{
     }
 })
 router.post("/login",async(req,res)=>{
-    const email = req.body.username
-    const password = req.body.password
     try{
-        const user = User.findOne({email:email})
+        const user = await User.findByCredentials(req.body.email,req.body.password)
+
         res.status(200).send("login successfull")
 
     }catch(e){
@@ -31,17 +30,20 @@ router.get("/sign",async(req,res)=>{
 })
 
 router.post("/sign",async(req,res)=>{
-    const name = req.body.name
-    const email = req.body.username
-    const password = req.body.password
-    const mobile = req.body.mobile
+    // const name = req.body.name
+    // const email = req.body.email
+    // const password = req.body.password
+    // const mobile = req.body.mobile
+    // const post = req.body.post
+    // const description = req.body.description
     const user = new User({
-        name:name,
-        email:email,
-        password:password,
-        mobile:mobile
+    name :req.body.name,
+    email : req.body.email,
+    password : req.body.password,
+    mobile : req.body.mobile,
+    post : req.body.post,
+    description : req.body.description
     })
-
     try{
         await user.save()
         res.status(201).send("accounted created")
@@ -50,8 +52,11 @@ router.post("/sign",async(req,res)=>{
     }
 })
 router.get("/profile",async(req,res)=>{
+    
     try{
-        res.render("profile")
+        const user=await User.findOne({name:"mohit"})
+        console.log(user)
+        res.render("profile",user)
     }catch(e){
         res.status(400).send()
 

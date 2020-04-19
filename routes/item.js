@@ -27,13 +27,5 @@ router.get("/items",async (req,res)=>{
     }
 })
 
-// router.get("/test",async(req,res)=>{
-//     try{
-//         const items=[{name:"mohit",class:"btech"},{name:"ritik",class:"tweelve"}]
-//         res.render("layout",items)
-//     }catch(e){
-//         res.status(500).send()
-//     }
-// })
 
 module.exports = router
