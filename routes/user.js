@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("../models/user")
 const router = new express.Router()
+const auth = require("../middleware/auth")
 
 router.get("/login",async(req,res)=>{
     try{
@@ -12,8 +13,9 @@ router.get("/login",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try{
         const user = await User.findByCredentials(req.body.email,req.body.password)
-
-        res.status(200).send("login successfull")
+        const token = await user.generateAuthToken()
+        res.setHeader("token",token)
+        res.status(200).send({message : user.name + " logged in"})
 
     }catch(e){
         res.status(400).send()
@@ -51,12 +53,13 @@ router.post("/sign",async(req,res)=>{
         res.status(400).send("oops it doesn't work")
     }
 })
-router.get("/profile",async(req,res)=>{
+router.get("/profile",auth,async(req,res)=>{
     
     try{
-        const user=await User.findOne({name:"mohit"})
-        console.log(user)
+        const user=await User.findOne({name:req.user.name})
+        // console.log(req.user)
         res.render("profile",user)
+        res.status(200).send()
     }catch(e){
         res.status(400).send()
 

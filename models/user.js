@@ -3,6 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt=require("jsonwebtoken")
 
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -41,29 +42,35 @@ const userSchema = new mongoose.Schema({
         trim:true,
         default:"customer"
     },
-    // tokens:[{
-    //     token:{
-    //         type:String,
-    //         required:true
-    //     }
-    // }
-    // ]
+    tokens:[{
+        token:{
+            type:String,
+            required:true
+        }
+    }
+    ]
 },{
     timestamps:true
 })
 
-// userSchema.methods.generateAuthToken = async function(){
-//     const user = this
-//     const token = jwt.sign({_id:user._id.toString()},process.env.JWT_SECRET)
+userSchema.methods.generateAuthToken = async function(){
+    const user = this
+    const token = jwt.sign({_id:user._id.toString()},"shoptoken")
 
-//     user.tokens = user.tokens.concat({token})
-//     await user.save()
-//     return token
-// }
+    user.tokens = user.tokens.concat({token})
+    await user.save()
+    return token
+}
+
+userSchema.methods.toJSON=function(){
+    const user = this
+    const userObject=user.toObject()
+
+    return userObject
+}
 
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
-
     if (!user) {
         throw new Error('please signup first')
     }
