@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const itemSchema= new mongoose.Schema({
     imagePath:{
         type:String,
-        required:true
+        // required:true
     },
     name:{
         type:String,

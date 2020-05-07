@@ -1,7 +1,34 @@
 const express = require("express")
 const User = require("../models/user")
+const Item = require("../models/item")
 const router = new express.Router()
 const auth = require("../middleware/auth")
+
+router.get("/addItem",async(req,res)=>{
+    try{
+        res.render("additem")
+    }catch(e){
+        res.status(400).send()
+    }
+})
+
+router.post("/addItem",async(req,res)=>{
+
+    item = new Item({
+        imagePath : req.body.imagePath,
+        name : req.body.name,
+        description : req.body.description,
+        price : req.body.price
+    })
+
+    try{
+        await item.save()
+        res.status(201).send("item created")
+
+    }catch(e){
+        res.status(400).send()
+    }
+})
 
 router.get("/login",async(req,res)=>{
     try{
@@ -45,6 +72,7 @@ router.post("/sign",async(req,res)=>{
         res.status(400).send("oops it doesn't work")
     }
 })
+
 router.get("/profile",auth,async(req,res)=>{
     
     try{
