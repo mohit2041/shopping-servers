@@ -14,9 +14,7 @@ router.post("/login",async(req,res)=>{
     try{
         const user = await User.findByCredentials(req.body.email,req.body.password)
         const token = await user.generateAuthToken()
-        res.setHeader("token",token)
-        res.status(200).send({message : user.name + " logged in"})
-
+        res.status(200).send({message : user.name + " logged in",token:token})
     }catch(e){
         res.status(400).send()
 
@@ -32,12 +30,6 @@ router.get("/sign",async(req,res)=>{
 })
 
 router.post("/sign",async(req,res)=>{
-    // const name = req.body.name
-    // const email = req.body.email
-    // const password = req.body.password
-    // const mobile = req.body.mobile
-    // const post = req.body.post
-    // const description = req.body.description
     const user = new User({
     name :req.body.name,
     email : req.body.email,
