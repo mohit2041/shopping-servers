@@ -2,9 +2,10 @@ const jwt=require("jsonwebtoken")
 const User=require("../models/user")
 
 const auth = async(req,res,next)=>{
+    const token = req.header("authToken")
+    
     try{
-        const token = req.headers['x-access-token'] || req.headers['authorization']
-        console.log(token)
+        if(!token) res.send({message:"token not available"})
         // const token = req.header("Authorization").replace("Bearer ","")
 
         const decoded=jwt.verify(token,"shoptoken")

@@ -2,33 +2,6 @@ const express = require("express")
 const User = require("../models/user")
 const Item = require("../models/item")
 const router = new express.Router()
-const auth = require("../middleware/auth")
-
-router.get("/addItem",async(req,res)=>{
-    try{
-        res.render("additem")
-    }catch(e){
-        res.status(400).send()
-    }
-})
-
-router.post("/addItem",async(req,res)=>{
-
-    item = new Item({
-        imagePath : req.body.imagePath,
-        name : req.body.name,
-        description : req.body.description,
-        price : req.body.price
-    })
-
-    try{
-        await item.save()
-        res.status(201).send("item created")
-
-    }catch(e){
-        res.status(400).send()
-    }
-})
 
 router.get("/login",async(req,res)=>{
     try{
@@ -40,11 +13,22 @@ router.get("/login",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try{
         const user = await User.findByCredentials(req.body.email,req.body.password)
-        const token = await user.generateAuthToken()
-        res.status(200).send({message : user.name + " logged in",token:token})
+        req.session.user = user
+        res.redirect("/items")
+    }catch(e){
+        res.status(400).send({message:"login unsuccesful"})
+    }
+})
+router.get("/logout",async(req,res)=>{
+    try{
+        if(req.session.user){
+            req.session.destroy()
+            res.redirect("/items")
+        }else{
+            res.send({message:"first log in and then try!!!"})
+        }
     }catch(e){
         res.status(400).send()
-
     }
 })
 
@@ -73,16 +57,16 @@ router.post("/sign",async(req,res)=>{
     }
 })
 
-router.get("/profile",auth,async(req,res)=>{
+router.get("/profile",async(req,res)=>{
     
     try{
-        const user=await User.findOne({name:req.user.name})
-        // console.log(req.user)
-        res.render("profile",user)
-        res.status(200).send()
+        if(!req.session.user){
+            res.redirect("/items")
+        }else{
+            res.render("profile",req.session.user)
+        }     
     }catch(e){
-        res.status(400).send()
-
+        res.redirect("/items")
     }
 })
 

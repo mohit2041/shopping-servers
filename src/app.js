@@ -2,6 +2,7 @@ const express=require("express")
 const path=require("path")
 const app=express()
 const bodyParser = require("body-parser")
+const session = require("express-session")
 require("./mongoose")
 const hbs=require("hbs")
 
@@ -21,6 +22,11 @@ hbs.registerPartials(partialspath)
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
+app.use(session({
+    secret:"manualshoppingplatform",
+    resave:false,
+    saveUninitialized:true
+}))
 app.use(itemrouter)
 app.use(userRouter)
 
