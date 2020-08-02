@@ -1,18 +1,18 @@
 {
   "name": "shop-servers",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js -e js,hbs,css"
+    "dev": "nodemon src/app.js -e js,handlebars,css"
   },
   "keywords": [],
-  "author": "",
+  "author": "mohit",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
     "express-session": "^1.17.1",
     "hbs": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -21,6 +21,15 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
-  }
+    "nodemon": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohit2041/shopping-servers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohit2041/shopping-servers/issues"
+  },
+  "homepage": "https://github.com/mohit2041/shopping-servers#readme",
+  "description": ""
 }

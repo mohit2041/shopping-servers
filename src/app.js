@@ -1,10 +1,15 @@
 const express=require("express")
-const path=require("path")
 const app=express()
+
+const path=require("path")
+
 const bodyParser = require("body-parser")
+
 const session = require("express-session")
+
 require("./mongoose")
-const hbs=require("hbs")
+
+const exphbs=require("express-handlebars").create({defaultLayout:'main'})
 
 const itemrouter = require("../routes/item")
 const userRouter = require("../routes/user")
@@ -12,12 +17,14 @@ const userRouter = require("../routes/user")
 
 const publicDirpath = path.join(__dirname,"../public")
 const viewpath=path.join(__dirname,"../templates/views")
-const partialspath=path.join(__dirname,"../templates/partials")
 
-app.use(express.static(publicDirpath))
-app.set("view engine","hbs")
+
+
+app.engine('handlebars', exphbs.engine )
+app.set("view engine","handlebars")
+
 app.set("views",viewpath)
-hbs.registerPartials(partialspath)
+app.use(express.static(publicDirpath))
 
 app.use(express.json())
 app.use(bodyParser.json())
