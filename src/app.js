@@ -29,11 +29,13 @@ app.use(express.static(publicDirpath))
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
+
 app.use(session({
     secret:"manualshoppingplatform",
     resave:false,
     saveUninitialized:true
 }))
+
 app.use(itemrouter)
 app.use(userRouter)
 

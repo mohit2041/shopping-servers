@@ -3,23 +3,23 @@ const validator = require("validator")
 const bcrypt = require('bcryptjs')
 
 const itemSchema= new mongoose.Schema({
-    imagePath:{
-        type:String,
-        // required:true
+    itemImage:{
+        type:Buffer,
+        // required:true,
     },
     name:{
         type:String,
-        required:true,
+        // required:true,
         trim:true
     },
     description:{
         type:String,
-        required:true,
+        // required:true,
         trim:true
     },
     price:{
         type:Number,
-        required:true,
+        // required:true,
         validate(value){
             if(value<0){
                 throw new Error("price must be positive")
