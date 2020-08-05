@@ -13,17 +13,12 @@ const exphbs=require("express-handlebars").create({defaultLayout:'main'})
 
 const itemrouter = require("../routes/item")
 const userRouter = require("../routes/user")
-// const Item= require("../models/item")
 
 const publicDirpath = path.join(__dirname,"../public")
-const viewpath=path.join(__dirname,"../templates/views")
-
-
 
 app.engine('handlebars', exphbs.engine )
 app.set("view engine","handlebars")
 
-app.set("views",viewpath)
 app.use(express.static(publicDirpath))
 
 app.use(express.json())
