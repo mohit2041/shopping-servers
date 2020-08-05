@@ -1,15 +1,14 @@
 const express = require("express")
+const cloudinary = require('cloudinary')
 const multer = require('multer')
+
+// accessing routes
+const User = require("../models/user")
+const Item = require("../models/item")
 
 const router = new express.Router()
 
-const User = require("../models/user")
 
-const Item = require("../models/item")
-
-const upload = multer({
-    dest:'itemImage'
-})
 
 // for creating item
 // router.post("/items",async (req,res)=>{
@@ -48,6 +47,7 @@ router.get("/addItem",async(req,res)=>{
 router.post("/addItem",async(req,res)=>{
 
     item = new Item({
+        imageUrl : req.file.url,
         name : req.body.name,
         description : req.body.description,
         price : req.body.price
@@ -64,8 +64,7 @@ router.post("/addItem",async(req,res)=>{
 })
 
 
-
-// for setting image for item 
+// for uploading image for item 
 router.get("/image",async(req,res)=>{
     try{
         res.render("addImage")
@@ -74,23 +73,22 @@ router.get("/image",async(req,res)=>{
     }
 })
 
-router.post("/image", upload.single('itemImage'), async(req,res)=>{
+router.post("/image", async(req,res,next)=>{
+
+    console.log(req.file)
+    item = new Item({
+        imageUrl : req.file.url
+    })
     
     try{
-
-        console.log(req.body)
-        item = new Item({
-            itemImage : req.file.buffer
-        })
-
         await item.save();
         res.send("image added")
     }catch(e){
         res.status(400).send({error:'something wrong'})
-
     }
 })
 
+// for displaying image
 router.get("/get/image",async(req,res) => {
     try{
         const items = await Item.find()
@@ -101,6 +99,5 @@ router.get("/get/image",async(req,res) => {
         res.status(400).send({error:'something wrong'})
     }
 })
-
 
 module.exports = router

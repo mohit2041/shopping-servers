@@ -3,8 +3,8 @@ const validator = require("validator")
 const bcrypt = require('bcryptjs')
 
 const itemSchema= new mongoose.Schema({
-    itemImage:{
-        type:Buffer,
+    imageUrl:{
+        type:String,
         // required:true,
     },
     name:{
